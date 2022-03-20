@@ -2,7 +2,7 @@ from random import randint
 from state import State
 
 
-class RandomPlan:
+class SimplePlan:
     def __init__(
         self, maxRows, maxColumns, goal, initialState, name="none", mesh="square"
     ):

@@ -12,6 +12,7 @@ from random import randint
 
 ## Importa o algoritmo para o plano
 from randomPlan import RandomPlan
+from simplePlan import SimplePlan
 
 ##Importa o Planner
 sys.path.append("pkg/planner")
@@ -62,7 +63,7 @@ class AgentRnd:
         self.costAll = 0
 
         ## Cria a instancia do plano para se movimentar aleatoriamente no labirinto (sem nenhuma acao)
-        self.plan = RandomPlan(
+        self.plan = SimplePlan(
             model.rows, model.columns, self.prob.goalState, initial, "goal", self.mesh
         )
 

@@ -4,8 +4,8 @@ import time
 
 ## Importa as classes que serao usadas
 sys.path.append("pkg")
-from model import Model
-from agentRnd import AgentRnd
+from pkg.model import Model
+from pkg.agentRnd import AgentRnd
 
 
 ## Metodo utilizado para permitir que o usuario construa o labirindo clicando em cima
@@ -24,6 +24,7 @@ def main():
     arq = open(os.path.join("config_data", "config.txt"), "r")
     configDict = {}
     for line in arq:
+        ## Alterar
         ## O formato de cada linha é:var=valor
         ## As variáveis são
         ##  maxLin, maxCol que definem o tamanho do labirinto
