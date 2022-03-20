@@ -126,7 +126,11 @@ class Model:
         """
         # result = plan.do()
         # step = result[0]
-        if action == "N":
+
+        if action == "Z":
+            row = self.agentPos[0]
+            col = self.agentPos[1]
+        elif action == "N":
             row = self.agentPos[0] - 1
             col = self.agentPos[1]
         elif action == "S":
