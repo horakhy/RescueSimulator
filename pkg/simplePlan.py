@@ -95,76 +95,65 @@ class SimplePlan:
             "SE": (1, 1),
             "SO": (1, -1),
         }
+        
         state = self.currentState
         self.visited.append(self.currentState)
-        while (state in self.visited):
-            rand = randint(0, 7)
-            movDirection = possibilities[rand]
-            state = State(
-                self.currentState.row + movePos[movDirection][0],
-                self.currentState.col + movePos[movDirection][1],
-            )
+        rand = randint(0, 7)
+        movDirection = possibilities[rand]
+        
+        if(self.battery > 7):
+            counter = 0
+            while (state in self.visited):
+                rand = randint(0, 7)
+                movDirection = possibilities[rand]
+                state = State(
+                    self.currentState.row + movePos[movDirection][0],
+                    self.currentState.col + movePos[movDirection][1],
+                )
+                counter += 1
+                if(counter > 10):
+                    self.visited = self.visited.pop()
+                    counter = 0
+                    break
 
-        # print(self.isPossibleToMove(State(self.currentState.row + 1, self.currentState.col)))
+        else:
+            if(self.initialState == self.currentState):
+                return ("Z", State(self.currentState.row, self.currentState.col))
 
-        # if(self.goalPos == self.currentState):
-        #     return ("Z", State(self.currentState.row, self.currentState.col))
-
-        # if self.goalPos.row == self.currentState.row:
-        #     if self.goalPos.col > self.currentState.col and self.isPossibleToMove(State(self.currentState.row, self.currentState.col + 1)):
-        #         return ("L", State(self.currentState.row, self.currentState.col + 1))
-        #     elif self.goalPos.col < self.currentState.col and self.isPossibleToMove(State(self.currentState.row, self.currentState.col - 1)):
-        #         return ("O", State(self.currentState.row, self.currentState.col - 1))
-        #     else:
-        #          return movDirection, state
-        # elif self.goalPos.col == self.currentState.col:
-        #     if self.goalPos.row > self.currentState.row and self.isPossibleToMove(State(self.currentState.row + 1, self.currentState.col)):
-        #         return ("S", State(self.currentState.row + 1, self.currentState.col))
-        #     elif self.goalPos.row < self.currentState.row and self.isPossibleToMove(State(self.currentState.row - 1, self.currentState.col)):
-        #         return ("N", State(self.currentState.row - 1, self.currentState.col))
-        #     else:
-        #          return movDirection, state
-        # else:
-        #     if self.goalPos.row > self.currentState.row:
-        #         if self.goalPos.col > self.currentState.col and self.isPossibleToMove(State(self.currentState.row + 1, self.currentState.col + 1)):
-        #             return ("SE", State(self.currentState.row + 1, self.currentState.col + 1))
-        #         elif self.goalPos.col < self.currentState.col and self.isPossibleToMove(State(self.currentState.row + 1, self.currentState.col - 1)):
-        #             return ("NE", State(self.currentState.row + 1, self.currentState.col - 1))
-        #         else:
-        #             return movDirection, state
-        #     elif self.goalPos.row < self.currentState.row:
-        #         if self.goalPos.col > self.currentState.col and self.isPossibleToMove(State(self.currentState.row - 1, self.currentState.col + 1)):
-        #             return ("SW", State(self.currentState.row - 1, self.currentState.col + 1))
-        #         elif self.goalPos.col < self.currentState.col and self.isPossibleToMove(State(self.currentState.row - 1, self.currentState.col -1)):
-        #             return ("NW", State(self.currentState.row - 1, self.currentState.col - 1))
-        #         else:
-        #             return movDirection, state
-        #     else:
-        #         return movDirection, state
-
-        possibilities = ["N", "S", "L", "O", "NE", "NO", "SE", "SO"]
-        movePos = {
-            "N": (-1, 0),
-            "S": (1, 0),
-            "L": (0, 1),
-            "O": (0, -1),
-            "NE": (-1, 1),
-            "NO": (-1, -1),
-            "SE": (1, 1),
-            "SO": (1, -1),
-        }
-
-        # self.visited.append(self.currentState)
-        # while ({
-        #     self.currentState.row + movePos[movDirection][0],
-        #     self.currentState.col + movePos[movDirection][1],
-        # } in self.visited):
-        #     rand = randint(0, 7)
-        #     state = State(
-        #         self.currentState.row + movePos[movDirection][0],
-        #         self.currentState.col + movePos[movDirection][1],
-        #     )
-
+            if self.initialState.row == self.currentState.row:
+                if self.initialState.col > self.currentState.col and self.isPossibleToMove(State(self.currentState.row, self.currentState.col + 1)):
+                    return ("L", State(self.currentState.row, self.currentState.col + 1))
+                elif self.initialState.col < self.currentState.col and self.isPossibleToMove(State(self.currentState.row, self.currentState.col - 1)):
+                    return ("O", State(self.currentState.row, self.currentState.col - 1))
+                else:
+                    return movDirection, state
+            elif self.initialState.col == self.currentState.col:
+                if self.initialState.row > self.currentState.row and self.isPossibleToMove(State(self.currentState.row + 1, self.currentState.col)):
+                    return ("S", State(self.currentState.row + 1, self.currentState.col))
+                elif self.initialState.row < self.currentState.row and self.isPossibleToMove(State(self.currentState.row - 1, self.currentState.col)):
+                    return ("N", State(self.currentState.row - 1, self.currentState.col))
+                else:
+                    return movDirection, state
+            else:
+                if self.initialState.row > self.currentState.row:
+                    if self.initialState.col > self.currentState.col and self.isPossibleToMove(State(self.currentState.row + 1, self.currentState.col + 1)):
+                        return ("SE", State(self.currentState.row + 1, self.currentState.col + 1))
+                    elif self.initialState.col < self.currentState.col and self.isPossibleToMove(State(self.currentState.row + 1, self.currentState.col - 1)):
+                        return ("NE", State(self.currentState.row + 1, self.currentState.col - 1))
+                    else:
+                        return movDirection, state
+                elif self.initialState.row < self.currentState.row:
+                    if self.initialState.col > self.currentState.col and self.isPossibleToMove(State(self.currentState.row - 1, self.currentState.col + 1)):
+                        return ("SW", State(self.currentState.row - 1, self.currentState.col + 1))
+                    elif self.initialState.col < self.currentState.col and self.isPossibleToMove(State(self.currentState.row - 1, self.currentState.col -1)):
+                        return ("NW", State(self.currentState.row - 1, self.currentState.col - 1))
+                    else:
+                        return movDirection, state
+                else:
+                    return movDirection, state
+        
+        print("----", self.battery)
+        self.battery -= 1
         return movDirection, state
 
     def chooseAction(self):
