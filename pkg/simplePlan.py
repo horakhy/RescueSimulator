@@ -4,12 +4,20 @@ from state import State
 
 class SimplePlan:
     def __init__(
-        self, maxRows, maxColumns, goal, initialState, name="none", mesh="square", battery=0
+        self,
+        maxRows,
+        maxColumns,
+        goal,
+        initialState,
+        name="none",
+        mesh="square",
+        battery=0,
     ):
         """
         Define as variaveis necessárias para a utilização do random plan por um unico agente.
         """
         self.walls = []
+        self.visited = []
         self.maxRows = maxRows
         self.maxColumns = maxColumns
         self.initialState = initialState
@@ -71,7 +79,7 @@ class SimplePlan:
 
     def randomizeNextPosition(self):
         ### Alterar para gerar movimentos aleatorios
-        
+
         """Sorteia uma direcao e calcula a posicao futura do agente
         @return: tupla contendo a acao (direcao) e o estado futuro resultante da movimentacao"""
 
@@ -87,15 +95,16 @@ class SimplePlan:
             "SE": (1, 1),
             "SO": (1, -1),
         }
+        state = self.currentState
+        self.visited.append(self.currentState)
+        while (state in self.visited):
+            rand = randint(0, 7)
+            movDirection = possibilities[rand]
+            state = State(
+                self.currentState.row + movePos[movDirection][0],
+                self.currentState.col + movePos[movDirection][1],
+            )
 
-        rand = randint(0, 7)
-        movDirection = possibilities[rand]
-        state = State(
-            self.currentState.row + movePos[movDirection][0],
-            self.currentState.col + movePos[movDirection][1],
-        )
-
-        
         # print(self.isPossibleToMove(State(self.currentState.row + 1, self.currentState.col)))
 
         # if(self.goalPos == self.currentState):
@@ -106,7 +115,7 @@ class SimplePlan:
         #         return ("L", State(self.currentState.row, self.currentState.col + 1))
         #     elif self.goalPos.col < self.currentState.col and self.isPossibleToMove(State(self.currentState.row, self.currentState.col - 1)):
         #         return ("O", State(self.currentState.row, self.currentState.col - 1))
-        #     else: 
+        #     else:
         #          return movDirection, state
         # elif self.goalPos.col == self.currentState.col:
         #     if self.goalPos.row > self.currentState.row and self.isPossibleToMove(State(self.currentState.row + 1, self.currentState.col)):
@@ -133,7 +142,6 @@ class SimplePlan:
         #     else:
         #         return movDirection, state
 
-
         possibilities = ["N", "S", "L", "O", "NE", "NO", "SE", "SO"]
         movePos = {
             "N": (-1, 0),
@@ -146,12 +154,16 @@ class SimplePlan:
             "SO": (1, -1),
         }
 
-        rand = randint(0, 7)
-        movDirection = possibilities[rand]
-        state = State(
-            self.currentState.row + movePos[movDirection][0],
-            self.currentState.col + movePos[movDirection][1],
-        )
+        # self.visited.append(self.currentState)
+        # while ({
+        #     self.currentState.row + movePos[movDirection][0],
+        #     self.currentState.col + movePos[movDirection][1],
+        # } in self.visited):
+        #     rand = randint(0, 7)
+        #     state = State(
+        #         self.currentState.row + movePos[movDirection][0],
+        #         self.currentState.col + movePos[movDirection][1],
+        #     )
 
         return movDirection, state
 
