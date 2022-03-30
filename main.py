@@ -5,6 +5,7 @@ import time
 ## Importa as classes que serao usadas
 sys.path.append("pkg")
 from pkg.model import Model
+from pkg.agentScr import AgentScr
 from pkg.agentRnd import AgentRnd
 
 
@@ -43,7 +44,17 @@ def main():
     ## nome do arquivo de configuracao do ambiente - deve estar na pasta <proj>/config_data
     loadMaze = "ambiente"
 
-    model = Model(configDict["maxLin"], configDict["maxCol"], mesh, loadMaze)
+    resV = {
+        "battery": configDict["Bv"],
+        "timeLimit": configDict["Tv"],
+    }
+    resS = {
+        "battery": configDict["Bs"],
+        "timeLimit": configDict["Ts"],
+        "payload": configDict["Ks"]
+    }
+
+    model = Model(configDict["maxLin"], configDict["maxCol"], mesh, loadMaze, resV, resS)
     buildMaze(model)
 
     model.maze.board.posAgent
@@ -55,6 +66,7 @@ def main():
 
     # Cria um agente
     agent = AgentRnd(model)
+    agentS = AgentScr(model)
 
     ## Ciclo de raciocínio do agente
     agent.deliberate()

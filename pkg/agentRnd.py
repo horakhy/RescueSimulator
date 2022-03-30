@@ -28,6 +28,7 @@ class AgentRnd:
 
         self.model = model
 
+        self.battery = model.resV["battery"]
         ## Pega o tipo de mesh, que está no model (influência na movimentação)
         self.mesh = self.model.mesh
 
@@ -64,7 +65,7 @@ class AgentRnd:
 
         ## Cria a instancia do plano para se movimentar aleatoriamente no labirinto (sem nenhuma acao)
         self.plan = SimplePlan(
-            model.rows, model.columns, self.prob.goalState, initial, "goal", self.mesh
+            model.rows, model.columns, self.prob.goalState, initial, "goal", self.mesh, self.battery
         )
 
         ## adicionar crencas sobre o estado do ambiente ao plano - neste exemplo, o agente faz uma copia do que existe no ambiente.

@@ -6,7 +6,7 @@ class Model:
     """Model implementa um ambiente na forma de um labirinto com paredes e com um agente.
     A indexação da posição do agente é feita sempre por um par ordenado (lin, col). Ver classe Labirinto."""
 
-    def __init__(self, rows, columns, mesh, load):
+    def __init__(self, rows, columns, mesh, load, resV, resS):
         """Construtor de modelo do ambiente físico (labirinto)
         @param rows: número de linhas do labirinto
         @param columns: número de colunas do labirinto
@@ -33,6 +33,11 @@ class Model:
         self.maze = Maze(rows, columns, self.mesh, self.view.getScreen(), load)
         ## Seta para o view o labirinto criado
         self.view.setBoard(self.maze.getBoard())
+
+        ## Atribui recursos do Vasculhador e Socorrista
+        self.resV = resV
+        self.resS = resS
+
 
     ## Metodo que desenha tudo no pygame
     def draw(self):
